@@ -9,7 +9,7 @@ theme: default
 
 --- cover
 layout: cover
-background: /cover.jpg
+background: https://images.unsplash.com/photo-1582571352032-448f7928eca3?w=1920
 
 ---
 
