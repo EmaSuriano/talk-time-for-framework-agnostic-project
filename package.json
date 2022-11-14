@@ -6,11 +6,15 @@
     "start": "yarn dev",
     "dev": "slidev --open",
     "export": "slidev export",
-    "preview": "npx http-server dist"
+    "preview": "npx http-server dist",
+    "optimize-images": "imageoptim './images/**/*.jpg' './images/**/*.gif' './images/**/*.png'"
   },
   "dependencies": {
     "@slidev/cli": "^0.36.10",
     "slidev-theme-purplin": "*",
     "vuetify": "^3.0.1"
+  },
+  "devDependencies": {
+    "imageoptim-cli": "^3.0.7"
   }
 }
