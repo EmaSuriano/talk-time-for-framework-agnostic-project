@@ -9,7 +9,7 @@ theme: default
 
 --- cover
 layout: cover
-background: /images/cover.jpg
+background: /cover.jpg
 
 ---
 
@@ -19,7 +19,7 @@ Typescript Berlin Meetup - Nov 2022
 
 --- about
 layout: about
-image: /images/avatar.jpg
+image: /avatar.jpg
 
 ---
 
