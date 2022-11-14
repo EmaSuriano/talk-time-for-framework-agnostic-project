@@ -1,21 +1,19 @@
 --- home
 theme: default
+layout: cover
+background: https://images.unsplash.com/photo-1485841890310-6a055c88698a?auto=format&fit=crop&w=1920&q=80
+---
+
+# Is it time for framework-agnostic apps?
+
+Typescript Berlin Meetup - Nov 2022
+
 ---
 
 ## TODO
 
 - Find a proper background for the talk
 - Fix font issue in dev-server bundler
-
---- cover
-layout: cover
-background: https://images.unsplash.com/photo-1485841890310-6a055c88698a?auto=format&fit=crop&w=1920&q=80
-
----
-
-# Is it time for framework-agnostic apps?
-
-Typescript Berlin Meetup - Nov 2022
 
 --- about
 layout: about
