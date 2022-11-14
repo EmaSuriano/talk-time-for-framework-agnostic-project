@@ -19,7 +19,7 @@ Typescript Berlin Meetup - Nov 2022
 
 --- about
 layout: about
-image: /avatar.jpg
+image: https://emasuriano.com/avatar.jpg
 
 ---
 
