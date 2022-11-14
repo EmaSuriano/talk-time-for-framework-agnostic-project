@@ -49,13 +49,13 @@ layout: fact
 
 <v-clicks>
 
-<img alt="react" class="w-30" src="images/react.svg" />
-<img alt="preact" class="w-30" src="images/preact.svg" />
-<img alt="vue" class="w-30" src="images/vue.svg" />
-<img alt="svelte" class="w-30" src="images/svelte.svg" />
-<img alt="solid" class="w-30" src="images/solid.svg" />
-<img alt="lit" class="w-30" src="images/lit.svg" />
-<img alt="alpine" class="w-30" src="images/alpine-js.svg" />
+<img alt="react" class="w-30" src="/images/react.svg" />
+<img alt="preact" class="w-30" src="/images/preact.svg" />
+<img alt="vue" class="w-30" src="/images/vue.svg" />
+<img alt="svelte" class="w-30" src="/images/svelte.svg" />
+<img alt="solid" class="w-30" src="/images/solid.svg" />
+<img alt="lit" class="w-30" src="/images/lit.svg" />
+<img alt="alpine" class="w-30" src="/images/alpine-js.svg" />
 
 </v-clicks>
 
@@ -67,7 +67,7 @@ All these frameworks are tackling the **same problem**
 
 And in many situations it might seems that ...
 
-![Are you the same?](images/2022-11-13-17-35-41.png)
+![Are you the same?](/images/2022-11-13-17-35-41.png)
 
 ---
 
@@ -104,7 +104,7 @@ Button
 
 ## But what if you can use all these frameworks together?
 
-![](images/2022-11-13-18-10-15.png)
+![](/images/2022-11-13-18-10-15.png)
 
 --- vite
 layout: iframe-right
@@ -120,40 +120,6 @@ Consists of:
 
 - A **dev server** that provides rich feature enhancements over [native ES modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules).
 - A **build command** that bundles your code with [Rollup](https://rollupjs.org/guide/en/), pre-configured to output highly optimized static assets for production.
-
---- dev server comparison
-layout: full
-class: p-0
-
----
-
-<div class="flex h-full">
-  <img alt="react" class="w-1/2" src="/images/dev-server-bundler.svg" />
-  <v-click>
-    <img alt="react" class="w-1/2" src="/images/dev-server-esm.svg" />
-  </v-click>
-</div>
-
-<v-footer>
-
-Source: [Why Vite?](https://vitejs.dev/guide/why.html)
-
-</v-footer>
-
----
-
-# Features
-
-<v-clicks>
-
-- Hot Module Replacement
-- Typescript out of the box 🎉
-- Support for JSX (`.jsx` and`.tsx`)
-- CSS and pre-preprocessor (`scss`, `sass`, `less`, etc.)
-- Glob and Dynamic import
-- Plugin system 👀
-
-</v-clicks>
 
 --- plugins
 layout: iframe-right
