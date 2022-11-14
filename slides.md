@@ -9,11 +9,11 @@ theme: default
 
 --- cover
 layout: cover
-background: https://images.unsplash.com/photo-1582571352032-448f7928eca3?w=1920
+background: https://images.unsplash.com/photo-1485841890310-6a055c88698a?auto=format&fit=crop&w=1920&q=80
 
 ---
 
-# Is it time for the framework-agnostic app?
+# Is it time for framework-agnostic apps?
 
 Typescript Berlin Meetup - Nov 2022
 
