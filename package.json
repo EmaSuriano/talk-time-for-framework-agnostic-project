@@ -15,6 +15,7 @@
     "vuetify": "^3.0.1"
   },
   "devDependencies": {
-    "imageoptim-cli": "^3.0.7"
+    "imageoptim-cli": "^3.0.7",
+    "vite-plugin-remote-assets": "^0.3.0"
   }
 }

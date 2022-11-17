@@ -14,6 +14,7 @@ Typescript Berlin Meetup - Nov 2022
 
 - Find a proper background for the talk
 - Fix font issue in dev-server bundler
+- Prepare questions for the event
 
 --- about
 layout: about
@@ -41,7 +42,7 @@ layout: fact
 
 ---
 
-# Poll time
+# Poll time!
 
 <div class='flex gap-4 w-140 flex-wrap justify-center items-center mx-auto'>
 
@@ -59,13 +60,30 @@ layout: fact
 
 </div>
 
+--- same issue
+layout: fact
+
 ---
 
-All these frameworks are tackling the **same problem**
+## All these frameworks are tackling the **same problem**
 
-And in many situations it might seems that ...
+<v-click>
 
-![Are you the same?](/images/2022-11-13-17-35-41.png)
+### And in many situations it might seems that ...
+
+</v-click>
+
+--- spider man meme
+layout: image
+image: /images/2022-11-13-17-35-41.png
+
+---
+
+<v-footer>
+
+[Know your meme](https://knowyourmeme.com/memes/spider-man-pointing-at-spider-man)
+
+</v-footer>
 
 ---
 
@@ -90,19 +108,39 @@ Button
 
 </v-click>
 
+--- change approach
+layout: section
+
 ---
 
-## Framework-agnostic structure for components
+## Why argue for which framework to use?
 
-```jsx
-// MyComponent.ts
+<v-clicks>
+
+## When you can just simply
+
+# Use them all
+
+</v-clicks>
+
+---
+
+Making possible that they communicate between each other!
+
+```tsx {2,9|3,10|4,11|5,10,11|all}
+---
+import ReactHeader from 'components/Header.tsx';
+import SvelteForm from 'components/Form.svelte';
+import VueResult from 'components/Result.vue';
+import { form, saveForm } from './state'
+---
+
+<main>
+    <ReactHeader title="My app" />
+    <SvelteForm onSubmit={saveForm} />
+    <VueResult result={form} />
+</main>
 ```
-
----
-
-## But what if you can use all these frameworks together?
-
-![](/images/2022-11-13-18-10-15.png)
 
 --- vite
 layout: iframe-right
@@ -144,6 +182,20 @@ export default defineConfig({
       targets: ['defaults', 'not IE 11'],
     }),
   ],
+});
+```
+
+---
+
+```ts {1,2,7|3,4,5|8|all}
+// vite.config.js
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import vue from '@vitejs/plugin-vue';
+import { svelte } from '@sveltejs/vite-plugin-svelte';
+
+export default defineConfig({
+  plugins: [react(), vue(), svelte()],
 });
 ```
 
