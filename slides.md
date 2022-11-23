@@ -147,6 +147,12 @@ Consists of:
 - A **dev server** that provides rich feature enhancements over [native ES modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules).
 - A **build command** that bundles your code with [Rollup](https://rollupjs.org/guide/en/), pre-configured to output highly optimized static assets for production.
 
+<v-footer >
+
+[vitejs.dev](https://vitejs.dev/)
+
+</v-footer>
+
 --- plugins
 layout: iframe-right
 url: https://github.com/vitejs/awesome-vite#vue
@@ -174,6 +180,12 @@ export default defineConfig({
   ],
 });
 ```
+
+<v-footer class="text-black">
+
+[awesome-vite](https://github.com/vitejs/awesome-vite#vue)
+
+</v-footer>
 
 <!-- Vite's default browser support baseline is Native ESM, native ESM dynamic import, and import.meta. This plugin provides support for legacy browsers that do not support those features when building for production. -->
 
@@ -261,7 +273,7 @@ layout: two-cols
 
 <div v-click="1">
 
-![Island Architecture](images/2022-11-22-19-48-22.png)
+![Island Architecture](/images/2022-11-22-19-48-22.png)
 
 </div>
 
@@ -507,7 +519,7 @@ url: https://npmtrends.com/@angular/core-vs-alpinejs-vs-lit-vs-preact-vs-react-v
 
 ---
 
---- end
+--- thanks
 layout: cover
 background: https://images.unsplash.com/photo-1485841890310-6a055c88698a?auto=format&fit=crop&w=1920&q=80
 
