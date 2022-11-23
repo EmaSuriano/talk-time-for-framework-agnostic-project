@@ -8,14 +8,6 @@ background: https://images.unsplash.com/photo-1485841890310-6a055c88698a?auto=fo
 
 Typescript Berlin Meetup - Nov 2022
 
----
-
-## TODO
-
-- Find a proper background for the talk
-- Fix font issue in dev-server bundler
-- Prepare questions for the event
-
 --- about
 layout: about
 image: https://emasuriano.com/avatar.jpg
@@ -87,11 +79,11 @@ image: /images/2022-11-13-17-35-41.png
 
 ---
 
-## Issues when working with different frameworks
+## Issues when working across UI frameworks
 
 <v-clicks>
 
-1. Components available only in one framework.
+1. Components available only in one framework
 2. Different ways of coding a component
 3. Same _goal_ re-written several times:
    - [Vuetify](https://vuetifyjs.com/en/):
@@ -109,25 +101,23 @@ Button
 </v-click>
 
 --- change approach
-layout: section
+layout: statement
 
 ---
 
 ## Why argue for which framework to use?
 
-<v-clicks>
+<v-click>
 
-## When you can just simply
+# Put them together
 
-# Use them all
-
-</v-clicks>
+</v-click>
 
 ---
 
 Making possible that they communicate between each other!
 
-```tsx {2,9|3,10|4,11|5,10,11|all}
+```tsx {all|2,9|3,10|4,11|5,10,11}
 ---
 import ReactHeader from 'components/Header.tsx';
 import SvelteForm from 'components/Form.svelte';
@@ -171,8 +161,8 @@ url: https://github.com/vitejs/awesome-vite#vue
 $ npm add -D @vitejs/plugin-legacy
 ```
 
-```js
-// vite.config.js
+```ts
+// vite.config.ts
 import legacy from '@vitejs/plugin-legacy';
 import { defineConfig } from 'vite';
 
@@ -185,10 +175,14 @@ export default defineConfig({
 });
 ```
 
+<!-- Vite's default browser support baseline is Native ESM, native ESM dynamic import, and import.meta. This plugin provides support for legacy browsers that do not support those features when building for production. -->
+
 ---
 
-```ts {1,2,7|3,4,5|8|all}
-// vite.config.js
+# Setup for multi-framework
+
+```ts {all|3-5|7-9}
+// vite.config.ts
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import vue from '@vitejs/plugin-vue';
@@ -199,97 +193,326 @@ export default defineConfig({
 });
 ```
 
---- test
-layout: image-right
-image: https://source.unsplash.com/collection/94734566/1920x1080
+--- building an app
+layout: two-cols
 
 ---
 
-# Slide Title
+## When building an app
 
-Colons can be used to align columns.
+<v-clicks >
 
-| Tables        | Are           | Cool  |
-| ------------- | ------------- | ----- |
-| col 3 is      | right-aligned | $1600 |
-| col 2 is      | centered      | $12   |
-| zebra stripes | are neat      | $1    |
+- Routing
+- Data fetching
+- State management
+- Asset optimization
+- SEO practices
 
---- test
-layout: section
+</v-clicks>
+
+::right::
+
+<v-click >
+
+![Too much work](/images/too-much-work.gif)
+
+</v-click>
+
+--- astro
+layout: two-cols
 
 ---
 
-# Section Title
+## What is Astro?
+
+<v-clicks>
+
+- Powered by Vite
+- From the developers of [Snowpack](https://www.snowpack.dev/)
+- Latest stable version 1.5, released [this October](https://astro.build/blog/astro-150/)
+- Bring Your Own Framework (BYOF), or use plain JS/HTML
+- Static Site Generator (SSG)\*
+- Zero JS by default + Client Hydration
+
+</v-clicks>
+
+::right::
+
+<img alt="Astro" class="w-80 m-auto my-10" src="/images/astro.svg" />
+
+--- astro - how?
+layout: two-cols
+
+---
+
+## How does Astro work?
+
+<v-clicks>
+
+- Astro is built based on Astro Islands (concept from [Island Architecture](https://jasonformat.com/islands-architecture/)).
+- You can use any supported UI framework (React, Svelte, Vue, etc.) to render islands in the browser.
+- Astro generates every website with zero client-side JavaScript, by default.
+- When a component needs some JavaScript, Astro only loads that one component (and any dependencies).
+- Even better, you can tell Astro exactly how and when to render each component, with [client directives](https://docs.astro.build/en/reference/directives-reference/#client-directives).
+
+</v-clicks>
+
+::right::
+
+<div v-click="1">
+
+![Island Architecture](images/2022-11-22-19-48-22.png)
+
+</div>
+
+--- code
+layout: full
+class: p-0
+
+---
+
+```jsx
+---
+import ReactComponent from '../components/ReactComponent.jsx';
+import localData from '../data/local-data.json';
+
+// type definition
+type Props = {
+  title: string;
+}
+
+// Access passed-in component props, like `<X title="Hello, World" />`
+const {title} = Astro.props;
+
+// Fetch external data, even from a private API or database
+const data = await fetch('EXTERNAL_SOURCE/users').then(r => r.json());
+---
+
+// render HTML with usage of props
+<h1>Title is: {title}</h1>
+
+// Render a framework component and pass props
+<ReactComponent title={title} />
+
+// Mix HTML with JavaScript expressions, similar to JSX
+<ul>
+  {data.map((item) => <li>{data.id}</li>)}
+</ul>
+
+<style>
+  /* scoped to the component, other H1s on the page remain the same */
+  h1 { color: red }
+</style>
+```
+
+<style>
+.slidev-code-wrapper { 
+  height: 100%;
+  overflow: auto;
+}
+</style>
+
+---
+
+# Client directives
+
+| **Directive**    | **Priority** | **Useful for**                                                                               |
+| ---------------- | ------------ | -------------------------------------------------------------------------------------------- |
+| `client:load`    | High         | Immediately-visible UI elements that need to be interactive as soon as possible              |
+| `client:idle`    | Medium       | Lower-priority UI elements that don’t need to be immediately interactive                     |
+| `client:visible` | Low          | Low-priority UI elements that are either far down the page or resource-intensive to load     |
+| `client:media`   | Low          | Sidebar toggles, or other elements that might only be visible on certain screen sizes.       |
+| `client:only`    | High         | Skips HTML server-rendering, and renders only on the client. Works the same as `client:load` |
 
 --- test
+layout: iframe-right
+url: https://astro-client-directives-test.netlify.app
+class: p-0 overflow-y-auto
+
+---
+
+```jsx
+---
+import Layout from '../layouts/Layout.astro';
+import Counter from '../components/Counter';
+---
+
+<Layout title="Welcome to Astro.">
+  <main>
+    <h1>Welcome to <span class="text-gradient">Astro</span></h1>
+
+    <br />
+    <h2><pre>no directive</pre></h2>
+    <p class="instructions">
+      <code>No JS, no interactive</code>
+      <Counter />
+    </p>
+
+    <br />
+    <h2><pre>client:load</pre></h2>
+    <p class="instructions">
+      <code>Loads JS as soon as possible</code>
+
+      <Counter client:load />
+    </p>
+
+    <br />
+    <h2><pre>client:idle</pre></h2>
+    <p class="instructions">
+      <code>Loads JS when rendering is over</code>
+
+      <Counter client:idle />
+    </p>
+
+    <br />
+    <h2><pre>client:visible</pre></h2>
+    <p class="instructions">
+      <code>Loads JS when button is visible by the user</code>
+
+      <Counter client:visible />
+    </p>
+
+    <br />
+    <h2><pre>client:media</pre></h2>
+    <p class="instructions">
+      <code>Loads JS when the media query (min-width: 680px) is valid</code>
+    </p>
+
+    <Counter client:media="(min-width: 680px)" />
+
+    <br />
+    <h2><pre>client:only</pre></h2>
+    <p class="instructions">
+      <code>Loads JS only in client (No SSR)</code>
+
+      <Counter client:only="react" />
+    </p>
+  </main>
+</Layout>
+```
+
+<v-footer>
+
+[astro-client-directives-test.netlify.app](https://astro-client-directives-test.netlify.app)
+
+</v-footer>
+
+--- sharing-state
 layout: statement
 
 ---
 
-# Statement
+# Sharing state?
 
---- test
-layout: fact
+--- nano stores
+layout: two-cols
+class: mx-1
 
 ---
 
-# 100%
+# Nano Stores
 
-Fact information
+- **They’re lightweight.** Nano Stores ship the bare minimum JS you’ll need (less than 1 KB) with zero dependencies.
+- **They’re framework-agnostic.** This means sharing state between frameworks will be seamless!
+
+```ts
+// store/users.ts
+import { atom } from 'nanostores';
+import type User from 'types';
+
+export const users = atom<User[]>([]);
+
+export function addUser(user: User) {
+  users.set([...users.get(), user]);
+}
+```
+
+::right::
+
+<v-click>
+
+```tsx
+import { useStore } from '@nanostores/react';
+import { users } from '../stores/users.ts';
+
+export const UserList = () => {
+  const list = useStore(users);
+
+  return (
+    <ul>
+      {list.map((user) => (
+        <UserItem key={user.id} user={user} />
+      ))}
+    </ul>
+  );
+};
+```
+
+</v-click>
+
+<v-click>
+
+```tsx
+<script lang="ts">
+  import { createUser } from '../utils/users';
+
+  function onClickHandler() {
+    const user = createUser();
+    addUser(user)
+  }
+</script>
+
+<Button on:click={onClickHandler}>
+  <Label>Add user</Label>
+</Button>
+```
+
+</v-click>
+
+--- Demo
+layout: statement
+
+---
+
+# Demo time 🔮
 
 --- test
+layout: iframe
+url: https://astro-multi-framework-dashboard.netlify.app/
+
+---
+
+<!-- asdasdkjashd -->
+
+--- asdasd
 layout: quote
 
 ---
 
-# "Notable quote"
+# Summary
 
-Attribution
+<v-clicks >
 
---- test
-layout: image-left
-image: https://source.unsplash.com/collection/94734566/1920x1080
+- **Vite** provides a dev server and bundler for our app.
+- A Vite application can be enhanced with the usage of **plugins**.
+- **Astro** is built on Vite and uses an Island Architecture.
+- Each component has to specify a **client directive** to be interactive.
+- The application state is being shared using **nanostore**.
 
----
+</v-clicks>
 
-# Code
-
-```ts {all|2|1-6|all}
-interface User {
-  id: number;
-  firstName: string;
-  lastName: string;
-  role: string;
-}
-
-function updateUser(id: number, update: Partial<User>) {
-  const user = getUser(id);
-  const newUser = { ...user, ...update };
-  saveUser(id, newUser);
-}
-```
-
---- test
-layout: center
-class: "text-center"
+--- npm comparison
+layout: iframe
+url: https://npmtrends.com/@angular/core-vs-alpinejs-vs-lit-vs-preact-vs-react-vs-solid-js-vs-svelte-vs-vue
 
 ---
 
-# Learn More
-
-[Documentations](https://sli.dev) / [GitHub Repo](https://github.com/slidevjs/slidev)
+--- end
+layout: cover
+background: https://images.unsplash.com/photo-1485841890310-6a055c88698a?auto=format&fit=crop&w=1920&q=80
 
 ---
 
-# H1
+# Thanks for listening!
 
-## H2
-
-### H3
-
-#### H4
-
-##### H5
-
-###### H6
+[time-for-framework-agnostic-projects.netlify.app](https://time-for-framework-agnostic-projects.netlify.app)
