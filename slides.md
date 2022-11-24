@@ -66,10 +66,12 @@ layout: fact
 </v-click>
 
 --- spider man meme
-layout: image
-image: /images/2022-11-13-17-35-41.png
+layout: full
+class: p-0 -mt-4
 
 ---
+
+![spiderman](/images/2022-11-13-17-35-41.png)
 
 <v-footer>
 
@@ -86,18 +88,15 @@ image: /images/2022-11-13-17-35-41.png
 1. Components available only in one framework
 2. Different ways of coding a component
 3. Same _goal_ re-written several times:
-   - [Vuetify](https://vuetifyjs.com/en/):
-   - [MUI core](https://mui.com/core/)
-   - [SMUI](https://sveltematerialui.com/)
+   - Vue: [Vuetify](https://vuetifyjs.com/en/)
+   - React: [MUI core](https://mui.com/core/)
+   - Svelte: [SMUI](https://sveltematerialui.com/)
+   - Angular: [Angular Material](https://material.angular.io/)
 
 </v-clicks>
 
 <v-click>
-
-<v-btn color="indigo" class="m-6" >
-Button
-</v-btn>
-
+  <material-button> Button </material-button>
 </v-click>
 
 --- change approach
@@ -147,7 +146,7 @@ Consists of:
 - A **dev server** that provides rich feature enhancements over [native ES modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules).
 - A **build command** that bundles your code with [Rollup](https://rollupjs.org/guide/en/), pre-configured to output highly optimized static assets for production.
 
-<v-footer >
+<v-footer>
 
 [vitejs.dev](https://vitejs.dev/)
 
@@ -155,7 +154,7 @@ Consists of:
 
 --- plugins
 layout: iframe-right
-url: https://github.com/vitejs/awesome-vite#vue
+url: https://vitejs.dev/plugins/#official-plugins
 
 ---
 
@@ -181,19 +180,21 @@ export default defineConfig({
 });
 ```
 
-<v-footer class="text-black">
+<v-footer>
 
-[awesome-vite](https://github.com/vitejs/awesome-vite#vue)
+[vitejs.dev/plugins/](https://vitejs.dev/plugins/)
 
 </v-footer>
-
-<!-- Vite's default browser support baseline is Native ESM, native ESM dynamic import, and import.meta. This plugin provides support for legacy browsers that do not support those features when building for production. -->
 
 ---
 
 # Setup for multi-framework
 
-```ts {all|3-5|7-9}
+```bash
+$ npm add -D  @vitejs/plugin-react @vitejs/plugin-vue @sveltejs/vite-plugin-svelte
+```
+
+```ts
 // vite.config.ts
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
@@ -207,10 +208,17 @@ export default defineConfig({
 
 --- building an app
 layout: two-cols
+class: flex flex-col justify-center
 
 ---
 
-## When building an app
+## Time to build something!
+
+<v-click>
+
+But wait ... What about?
+
+</v-click>
 
 <v-clicks >
 
@@ -231,26 +239,25 @@ layout: two-cols
 </v-click>
 
 --- astro
-layout: two-cols
+layout: iframe-right
+url: https://astro.build/
 
 ---
 
-## What is Astro?
-
-<v-clicks>
+## Astro
 
 - Powered by Vite
 - From the developers of [Snowpack](https://www.snowpack.dev/)
-- Latest stable version 1.5, released [this October](https://astro.build/blog/astro-150/)
+- Stable version released [on August, 2022](https://astro.build/blog/astro-1/)
 - Bring Your Own Framework (BYOF), or use plain JS/HTML
-- Static Site Generator (SSG)\*
 - Zero JS by default + Client Hydration
+- SSG/SSR
 
-</v-clicks>
+<v-footer>
 
-::right::
+[astro.build/](https://astro.build/)
 
-<img alt="Astro" class="w-80 m-auto my-10" src="/images/astro.svg" />
+</v-footer>
 
 --- astro - how?
 layout: two-cols
@@ -261,11 +268,10 @@ layout: two-cols
 
 <v-clicks>
 
-- Astro is built based on Astro Islands (concept from [Island Architecture](https://jasonformat.com/islands-architecture/)).
-- You can use any supported UI framework (React, Svelte, Vue, etc.) to render islands in the browser.
-- Astro generates every website with zero client-side JavaScript, by default.
-- When a component needs some JavaScript, Astro only loads that one component (and any dependencies).
-- Even better, you can tell Astro exactly how and when to render each component, with [client directives](https://docs.astro.build/en/reference/directives-reference/#client-directives).
+- Astro is built based on **Astro Islands** (concept from [Island Architecture](https://jasonformat.com/islands-architecture/)).
+- You can use **any UI framework** (React, Svelte, Vue, etc.) to render islands in the browser.
+- Astro generates every website with **zero client-side JavaScript**, by default.
+- If a component requires JS, you can tell Astro exactly how and when to render each component, with [client directives](https://docs.astro.build/en/reference/directives-reference/#client-directives).
 
 </v-clicks>
 
@@ -273,20 +279,20 @@ layout: two-cols
 
 <div v-click="1">
 
-![Island Architecture](/images/2022-11-22-19-48-22.png)
+![Island Architecture](/images/astro-island.png)
 
 </div>
 
 --- code
 layout: full
-class: p-0
+class: p-0 overflow-y-auto
 
 ---
 
-```jsx
+```jsx {2,3|5-11|12-17|20-26|28-32|34-38,20-22}
 ---
-import ReactComponent from '../components/ReactComponent.jsx';
-import localData from '../data/local-data.json';
+import AstroComponent from '../components/AstroComponent.astro';
+import ReactComponent from '../components/ReactComponent.tsx';
 
 // type definition
 type Props = {
@@ -296,20 +302,26 @@ type Props = {
 // Access passed-in component props, like `<X title="Hello, World" />`
 const {title} = Astro.props;
 
-// Fetch external data, even from a private API or database
+// Fetch external data, even from a private API or database (SSG)
 const data = await fetch('EXTERNAL_SOURCE/users').then(r => r.json());
+
+// Read params from the url (SSR)
+const product = await getProduct(Astro.params.id);
 ---
 
 // render HTML with usage of props
 <h1>Title is: {title}</h1>
 
-// Render a framework component and pass props
-<ReactComponent title={title} />
-
 // Mix HTML with JavaScript expressions, similar to JSX
 <ul>
   {data.map((item) => <li>{data.id}</li>)}
 </ul>
+
+// Render another Astro component and pass props (No JS loaded)
+<AstroComponent title={title} />
+
+// Render a framework component and pass props (JS loaded)
+<ReactComponent client:load onChange={callback}/>
 
 <style>
   /* scoped to the component, other H1s on the page remain the same */
@@ -317,26 +329,7 @@ const data = await fetch('EXTERNAL_SOURCE/users').then(r => r.json());
 </style>
 ```
 
-<style>
-.slidev-code-wrapper { 
-  height: 100%;
-  overflow: auto;
-}
-</style>
-
----
-
-# Client directives
-
-| **Directive**    | **Priority** | **Useful for**                                                                               |
-| ---------------- | ------------ | -------------------------------------------------------------------------------------------- |
-| `client:load`    | High         | Immediately-visible UI elements that need to be interactive as soon as possible              |
-| `client:idle`    | Medium       | Lower-priority UI elements that don’t need to be immediately interactive                     |
-| `client:visible` | Low          | Low-priority UI elements that are either far down the page or resource-intensive to load     |
-| `client:media`   | Low          | Sidebar toggles, or other elements that might only be visible on certain screen sizes.       |
-| `client:only`    | High         | Skips HTML server-rendering, and renders only on the client. Works the same as `client:load` |
-
---- test
+--- Demo client directives
 layout: iframe-right
 url: https://astro-client-directives-test.netlify.app
 class: p-0 overflow-y-auto
@@ -414,7 +407,13 @@ layout: statement
 
 ---
 
-# Sharing state?
+# State management
+
+<v-click>
+
+## Solved!
+
+</v-click>
 
 --- nano stores
 layout: two-cols
@@ -424,8 +423,12 @@ class: mx-1
 
 # Nano Stores
 
+> A tiny state manager for React, React Native, Preact, Vue, Svelte, and vanilla JS. It uses many atomic stores and direct manipulation.
+
 - **They’re lightweight.** Nano Stores ship the bare minimum JS you’ll need (less than 1 KB) with zero dependencies.
 - **They’re framework-agnostic.** This means sharing state between frameworks will be seamless!
+
+<v-click>
 
 ```ts
 // store/users.ts
@@ -439,13 +442,16 @@ export function addUser(user: User) {
 }
 ```
 
+</v-click>
+
 ::right::
 
-<v-click>
+<v-clicks>
 
 ```tsx
 import { useStore } from '@nanostores/react';
 import { users } from '../stores/users.ts';
+import { UserItem } from './UserItem.tsx';
 
 export const UserList = () => {
   const list = useStore(users);
@@ -460,33 +466,23 @@ export const UserList = () => {
 };
 ```
 
-</v-click>
-
-<v-click>
-
 ```tsx
 <script lang="ts">
-  import { createUser } from '../utils/users';
-
-  function onClickHandler() {
-    const user = createUser();
-    addUser(user)
-  }
+  import { UserForm } from './UserForm.svelte';
+  import { addUser } from '../stores/users.ts';
 </script>
 
-<Button on:click={onClickHandler}>
-  <Label>Add user</Label>
-</Button>
+<UserForm on:submit={user => addUser(user)} />
 ```
 
-</v-click>
+</v-clicks>
 
 --- Demo
 layout: statement
 
 ---
 
-# Demo time 🔮
+# Demo time ✨
 
 --- test
 layout: iframe
@@ -494,20 +490,142 @@ url: https://astro-multi-framework-dashboard.netlify.app/
 
 ---
 
-<!-- asdasdkjashd -->
+--- nano stores
+layout: two-cols
+class: p-0 mx-1 overflow-y-auto
 
---- asdasd
+---
+
+```tsx
+// pages/index.astro
+---
+// Astro
+import Layout from 'layouts/Layout.astro';
+import type { Product } from 'types';
+
+// React
+import { HighlighterWrapper, HighlighterToggle } from 'components/Highlighter';
+import CategoryChart from 'components/CategoryChart';
+
+// Svelte
+import Tags from 'components/Tags.svelte';
+import ProductTable from 'components/ProductTable.svelte';
+
+// Vue
+import Banner from 'components/Banner.vue';
+import Overview from 'components/Overview.vue';
+
+// fetch data
+const products = await fetch('https://dummyjson.com/products')
+  .then((res) => res.json())
+  .then((res) => res.products as Product[]);
+---
+
+<Layout page="Home">
+  <HighlighterToggle client:only="react" />
+
+  <div class="tw-grid tw-gap-4 tw-grid-cols-3 lg:tw-grid-cols-5 md:tw-gap-10">
+    <HighlighterWrapper
+      client:idle
+      framework="vue"
+      className="tw-col-span-full"
+    >
+      <Banner client:load />
+    </HighlighterWrapper>
+
+    <HighlighterWrapper client:idle framework="svelte">
+      <Tags client:load products={products} />
+    </HighlighterWrapper>
+
+    <HighlighterWrapper client:idle framework="vue">
+      <Overview client:load products={products} />
+    </HighlighterWrapper>
+
+    <HighlighterWrapper client:idle framework="react" className="tw-col-span-3">
+      <CategoryChart client:only="react" products={products} />
+    </HighlighterWrapper>
+
+    <HighlighterWrapper
+      client:idle
+      framework="svelte"
+      className="tw-col-span-full"
+    >
+      <ProductTable client:visible products={products} />
+    </HighlighterWrapper>
+  </div>
+</Layout>
+```
+
+```ts
+// utils/state.ts
+import { atom } from 'nanostores';
+
+export const isFrameworkVisible = atom(false);
+
+export const hiddenCategories = atom<string[]>([]);
+```
+
+<v-footer>
+
+[github.com/EmaSuriano/astro-multi-framework-dashboard](https://github.com/EmaSuriano/astro-multi-framework-dashboard)
+
+</v-footer>
+
+::right::
+
+<v-click>
+
+```tsx
+// components/Tags.svelte
+<script lang="ts">
+  import Chip, { Set, Text } from '@smui/chips';
+  import { getCategories } from 'utils/product';
+  import type { Product } from 'types';
+  import { humanize } from 'utils/string';
+  import { hiddenCategories } from 'utils/state';
+
+  export let products: Product[];
+
+  let categories = getCategories(products);
+  let selected: string[] = Array.from(categories);
+
+  function updateSelection() {
+    hiddenCategories.set(
+      categories.filter((category) => !selected.includes(category)),
+    );
+  }
+</script>
+
+<h1>Categories</h1>
+
+<Set
+  chips={categories}
+  let:chip
+  filter
+  bind:selected
+  on:click={updateSelection}
+>
+  <Chip {chip} touch>
+    <Text>{humanize(chip)}</Text>
+  </Chip>
+</Set>
+```
+
+</v-click>
+
+--- Summary
 layout: quote
 
 ---
 
-# Summary
+# Takeaways 🧳
 
 <v-clicks >
 
 - **Vite** provides a dev server and bundler for our app.
 - A Vite application can be enhanced with the usage of **plugins**.
-- **Astro** is built on Vite and uses an Island Architecture.
+- **Astro** is built on Vite and uses an [Island Architecture](https://jasonformat.com/islands-architecture/).
+- An Island can use **any UI framework** to render content.
 - Each component has to specify a **client directive** to be interactive.
 - The application state is being shared using **nanostore**.
 
