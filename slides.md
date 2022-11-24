@@ -1,7 +1,8 @@
 --- home
 theme: default
 layout: cover
-background: https://images.unsplash.com/photo-1485841890310-6a055c88698a?auto=format&fit=crop&w=1920&q=80
+background: https://cdn.discordapp.com/attachments/1045281897430921226/1045302373037379604/Ema_tv_tower_of_berlin_written_in_code_white_background_d6e4901f-d988-478e-b2d9-dc79850c39c4.png
+
 ---
 
 # Is it time for framework-agnostic apps?
@@ -23,11 +24,7 @@ Frontend Engineer at [Revolut](https://www.revolut.com/)
 - Cook 🧑‍🍳
 - AI Enthusiast 🤖
 
-<v-click>
-
 [emasuriano.com](https://emasuriano.com/)
-
-</v-click>
 
 --- quiz
 layout: fact
@@ -639,10 +636,10 @@ url: https://npmtrends.com/@angular/core-vs-alpinejs-vs-lit-vs-preact-vs-react-v
 
 --- thanks
 layout: cover
-background: https://images.unsplash.com/photo-1485841890310-6a055c88698a?auto=format&fit=crop&w=1920&q=80
+background: https://cdn.discordapp.com/attachments/1045281897430921226/1045302373037379604/Ema_tv_tower_of_berlin_written_in_code_white_background_d6e4901f-d988-478e-b2d9-dc79850c39c4.png
 
 ---
 
 # Thanks for listening!
 
-[time-for-framework-agnostic-projects.netlify.app](https://time-for-framework-agnostic-projects.netlify.app)
+## [time-for-framework-agnostic-projects.netlify.app](https://time-for-framework-agnostic-projects.netlify.app)
